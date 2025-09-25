@@ -1,0 +1,1 @@
+### Bu klasör bu sistemdeki her bir yapının kubernetes deployment süreci ile ilgili dosyaları içerecektir.
