@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark mode variables */
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 15 23 42;
+    --card: 255 255 255;
+    --card-foreground: 15 23 42;
+    --border: 226 232 240;
+    --input: 226 232 240;
+  }
+
+  .dark {
+    --background: 2 6 23;
+    --foreground: 241 245 249;
+    --card: 15 23 42;
+    --card-foreground: 241 245 249;
+    --border: 30 41 59;
+    --input: 30 41 59;
+  }
+
+  * {
+    border-color: rgb(var(--border));
+  }
+
+  body {
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+    min-height: 100vh;
+  }
+}
+
+/* Custom utilities */
+@layer utilities {
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}

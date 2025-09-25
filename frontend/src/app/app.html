@@ -1,0 +1,14 @@
+<header>
+    <nav>
+        <div *ngIf="!auth.isLoggedIn">
+            <button (click)="auth.login()">Giriş Yap</button>
+        </div>
+        <div *ngIf="auth.isLoggedIn">
+            <span>Hoşgeldiniz, {{ auth.claims?.given_name }}</span>
+            <button (click)="auth.logout()">Çıkış Yap</button>
+        </div>
+    </nav>
+</header>
+<main>
+    <router-outlet></router-outlet>
+</main>
