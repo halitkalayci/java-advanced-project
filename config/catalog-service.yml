@@ -1,0 +1,29 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  cloud:
+    function:
+      definition: orderCreatedConsumerFunction
+    stream:
+      bindings:
+        orderCreatedConsumerFunction-in-0:
+          destination: order-events
+          group: catalog-service #mesaj her instance'a değil gruba bir kere gönderilsin.
+          contentType: application/json
+          consumer:
+            max-attempts: 5
+            back-off-initial-interval: 500
+            back-off-max-interval: 5000
+            back-off-multiplier: 2.0
+      kafka:
+        bindings:
+          orderCreatedConsumerFunction-in-0:
+            consumer:
+              enable-dlq: true
+              dlq-name: order-events.DLQ.catalog-service
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
