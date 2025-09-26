@@ -10,7 +10,7 @@ spring:
           uri: https://github.com/halitkalayci/java-advanced-project
           default-label: master
           search-paths: 
-            - config
+            - config/{application}
 
 management:
   endpoints:
