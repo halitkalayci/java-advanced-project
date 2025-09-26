@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          forwarded:
+            enabled: true
+          x-forwarded:
+            enabled: true
+          routes:
+            - id: catalog-service-route
+              uri: lb://catalog-service
+              predicates:
+                - Path=/api/v1/catalog/**
+
+server:
+  port: 8888
+
+
