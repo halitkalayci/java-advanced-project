@@ -1,0 +1,7 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+### 1. İsimlendirme kuralları
+## 1.1 -> Hexagonal Mimaride "interfaces" ismini değil "adapter" katmanı ismini benimse.

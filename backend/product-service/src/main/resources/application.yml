@@ -6,4 +6,5 @@ spring:
   profiles:
     active: dev
   config:
-    import: "configserver:${configurl}"  
+    import: "configserver:${configurl}"
+        

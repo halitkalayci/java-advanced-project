@@ -102,6 +102,21 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+  product-service:
+    image: turkcell-productservice
+    build: ./product-service
+    ports:
+      - 32080:8080
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      product-db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONFIGURL: "http://config-server:8787"
 volumes:
   kc_themes: {}
   kc_pgdata: {}
