@@ -8,10 +8,10 @@ services:
       - 32087:8787
     healthcheck:
       test: ["CMD-SHELL", "wget --spider -q http://localhost:8787/actuator/health"]
-      interval: 10s
-      timeout: 5s
+      interval: 5s
+      timeout: 3s
       retries: 3
-      start_period: 20s
+      start_period: 10s   
   eureka-server:
     image: turkcell-eurekaserver
     build: ./eureka-server
@@ -25,10 +25,10 @@ services:
       CONFIGURL: "http://config-server:8787"
     healthcheck:
       test: ["CMD-SHELL", "wget --spider -q http://localhost:8761/actuator/health"]
-      interval: 10s
-      timeout: 5s
+      interval: 5s
+      timeout: 3s
       retries: 3
-      start_period: 20s    
+      start_period: 10s    
   gateway-server:
     image: turkcell-gatewayserver
     build: ./gateway-server
@@ -42,3 +42,50 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
       CONFIGURL: "http://config-server:8787"
+  kc-postgres:
+    image: postgres:15
+    container_name: kc-postgres-2
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    volumes:
+      - kc_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U keycloak -d keycloak" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.5
+    container_name: keycloak-2
+    depends_on:
+      kc-postgres:
+        condition: service_healthy
+    command:
+      - start-dev
+      - --http-port=8080
+      - --proxy=edge
+      - --spi-theme-cache-themes=false
+      - --spi-theme-cache-templates=false
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://kc-postgres:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+    ports:
+      - "8003:8080"   # 8081 dolu olduğu için dışarı 8003 verdik
+    volumes:
+      - kc_themes:/opt/keycloak/themes              # (İsteğe bağlı tema)
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/health/ready || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+volumes:
+  kc_themes: {}
+  kc_pgdata: {}
