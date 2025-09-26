@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: eureka-server
-        image: halitkalayci/turkcell-eurekaserver:latest
+        image: halitkalayci/turkcell-eurekaserver:1.0.0
         ports:
         - containerPort: 8761
         env:
