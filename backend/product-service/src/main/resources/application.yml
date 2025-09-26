@@ -1,0 +1,9 @@
+configurl: http://localhost:8787
+
+spring:
+  application:
+    name: product-service
+  profiles:
+    active: dev
+  config:
+    import: "configserver:${configurl}"  
