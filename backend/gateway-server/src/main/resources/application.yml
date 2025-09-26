@@ -1,7 +1,10 @@
+configurl: http://localhost:8787
+
+
 spring:
   application:
     name: gateway-server
   profiles:
     active: dev
   config:
-    import: "configserver:http://localhost:8787"  
+    import: "configserver:${configurl}"  
