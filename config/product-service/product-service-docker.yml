@@ -1,6 +1,8 @@
 spring:
   datasource:
     url: "jdbc:postgresql://product-db:5432/product-db"
+    username: postgres
+    password: test
 eureka:
   client:
     service-url:
