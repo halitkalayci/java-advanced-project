@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://product-db:5432/product-db"
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/

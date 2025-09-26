@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:32089/product-db"
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:32086/eureka/
