@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  config-server:
+    image: turkcell-configserver
+    build: ./config-server
+    ports:
+      - 32087:8787
